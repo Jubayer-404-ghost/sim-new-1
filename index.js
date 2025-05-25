@@ -84,7 +84,7 @@ app.get('/sim/:font?', async (req, res) => {
 
   if (ask) {
     const qKey = ask.trim().toLowerCase();
-    let reply = memory[qKey] || 'I don’t know that yet! Teach me using /sim?teach=question|answer';
+    let reply = memory[qKey] || 'Plz Bby Teach Me This Question 🥺🥺;
     if (font === 'font1') {
       reply = applyFont1(reply);
     }
