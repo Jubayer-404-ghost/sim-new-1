@@ -56,8 +56,14 @@ app.get('/sim/:font?', async (req, res) => {
   const { font } = req.params;
   const { ask, teach } = req.query;
 
-  if (!ask && !teach) {
-    return res.status(400).json({ error: 'Use /sim?ask=question or /sim?teach=question|answer' });
+  if (req.path.endsWith('/list')) {
+    const memory = await getMemory();
+    const count = Object.keys(memory).length;
+    let message = `Total taught: ${count} items`;
+    if (font === 'font1') {
+      message = applyFont1(message);
+    }
+    return res.json({ total: count, message });
   }
 
   let memory = await getMemory();
@@ -84,6 +90,8 @@ app.get('/sim/:font?', async (req, res) => {
     }
     return res.json({ reply });
   }
+
+  return res.status(400).json({ error: 'Use /sim?ask=question or /sim?teach=question|answer' });
 });
 
 app.listen(PORT, () => {
